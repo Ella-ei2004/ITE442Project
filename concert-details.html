@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Concert Details — Go2Events</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="index.js">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+      <div class="container">
+        <a class="navbar-brand nav-brand" href="index.html">Go2Events</a>
+        <div class="collapse navbar-collapse" id="navMenu6">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="concerts.html">Concerts</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="container py-5">
+      <div id="concertDetails"></div>
+      <button id="reserveBtn" class="btn accent-btn mt-3">Reserve Tickets</button>
+    </section>
+
+    <!-- Simple Modern Login Alert Modal -->
+    <div class="modal fade" id="loginAlert" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center p-4 rounded-4">
+
+        <!-- Header / Icon -->
+        <div class="modal-header border-0 justify-content-center">
+            <div style="font-size: 2.5rem;">🎫</div>
+        </div>
+
+        <!-- Title & Message -->
+        <div class="modal-body">
+            <h5 class="fw-bold mb-2">Login Required</h5>
+            <p class="text-muted mb-0">You must be logged in to reserve tickets.</p>
+        </div>
+
+        <!-- Footer / Button -->
+        <div class="modal-footer border-0 justify-content-center">
+            <a href="login.html" class="btn btn-primary rounded-pill px-4">Go to Login</a>
+        </div>
+
+        </div>
+    </div>
+    </div>
+
+
+
+
+    <footer class="text-center py-3 text-white-50"> <span id="year6"></span> Go2Events @copyright 2025</footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      document.getElementById('year6').textContent=new Date().getFullYear();
+
+      const concerts = [
+        {id:1, city:"Seoul", venue:"Jamsil Olympic Stadium", date:"2025-10-03T19:00:00",time:'20:00', price:120, img:"img/img1.jpg", popular:true},
+        {id:2, city:"Tokyo", venue:"Tokyo Dome", date:"2025-10-12T18:30:00", price:135,time:'19:00', img:"img/img2.jpg", popular:true},
+        {id:3, city:"Los Angeles", venue:"SoFi Stadium", date:"2025-11-02T19:30:00",time:'13:00', price:149, img:"img/img3.jpg", popular:true},
+        {id:4, city:"Bangkok", venue:"Rajamangala Stadium", date:"2025-11-15T19:00:00",time:'10:00', price:99, img:"img/img4.jpg", popular:true},
+        {id:5, city:"London", venue:"Wembley Stadium", date:"2025-12-05T19:30:00",time:'18:00', price:140, img:"img/img5.jpg"},
+        {id:6, city:"New York", venue:"MetLife Stadium", date:"2025-12-12T19:30:00",time:'15:00', price:142, img:"img/img6.webp"},
+        {id:7, city:"Singapore", venue:"National Stadium", date:"2026-01-10T19:00:00",time:'00:00', price:110, img:"img/img7.jpg"},
+        {id:8, city:"Sydney", venue:"Accor Stadium", date:"2026-01-25T19:00:00", time:'11:00', price:115, img:"img/img8.jpg"}
+      ];
+
+      const params = new URLSearchParams(window.location.search);
+      const concertId = parseInt(params.get('id'));
+      const concert = concerts.find(c => c.id === concertId);
+      const container = document.getElementById('concertDetails');
+      const reserveBtn = document.getElementById('reserveBtn');
+
+      if(!concert){
+        container.innerHTML='<p class="text-center text-white-50">Concert not found.</p>';
+        reserveBtn.style.display='none';
+      } else {
+        container.innerHTML=`
+          <div class="card glass mb-3">
+            
+            <div class="card-body row">
+              <div class="col-md-6">
+                <img src="${concert.img}" class="card-img-detail" alt="${concert.city}">
+              </div>
+              <div class="col-md-6">
+                <h3 class="card-title">${concert.city} — ${concert.venue}</h3>
+               <p>Date: ${new Date(concert.date).toLocaleDateString()} • Time: ${concert.time}</p>
+               <p>Price: $${concert.price} USD</p>
+               <p>Experience the BTS concert live at ${concert.venue} in ${concert.city}. Click Reserve to proceed to checkout and select your seats.</p>
+              </div>
+          </div>`;
+
+        reserveBtn.addEventListener('click', function() {
+        const loggedIn = localStorage.getItem('bts_loggedIn');
+        if (!loggedIn) {
+            const modal = new bootstrap.Modal(document.getElementById('loginAlert'));
+            modal.show();
+        } else {
+            window.location.href = `checkout.html?id=${concert.id}`;
+        }
+        });
+      }
+    </script>
+  </body>
+</html>

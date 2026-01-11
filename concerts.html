@@ -1,0 +1,103 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Concerts — Go2Events</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+      <div class="container">
+        <a class="navbar-brand nav-brand" href="index.html">Go2Events</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ml-auto align-items-center">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+             <li class="nav-item d-flex align-items-center pl-3">
+              <span class="text-white-50 welcome" id="welcomeText" style="display:none"></span>
+              <a href="login.html" class="btn btn-sm btn-outline-light mr-2" id="loginBtn">Login</a>
+              <button class="btn btn-sm accent-btn" id="logoutBtn" style="display:none">Logout</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+ </nav>
+
+<section class="container py-5">
+    <div class="text-center mb-4">
+        <h2 class="text-white">Upcoming Concerts</h2><p class="text-white">Filter and pick the show you want to attend.</p>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <select id="filterCity" class="form-control">
+                <option value="all">All Cities</option>
+                <option value="Bangkok">Bangkok</option>
+                <option value="Seoul">Seoul</option>
+                <option value="Los Angeles">Los Angeles</option>
+                <option value="London">London</option>
+                <option value="New York">New York</option>
+                <option value="Singapore">Singapore</option>
+                <option value="Sydney">Sydney</option>
+                <option value="Tokyo">Tokyo</option>
+            </select>
+        </div>
+        <div class="col-md-8 text-right text-white-50">Showing <span id="count">0</span> events</div>
+    </div>
+    <div class="row" id="concertList"></div>
+</section>
+
+<footer class="text-center py-3 text-white-50"> <span id="year6"></span> Go2Events @copyright 2025</footer>
+
+
+<script>
+const concerts=[
+        {id:1, city:"Seoul", venue:"Jamsil Olympic Stadium", date:"2025-10-03T19:00:00",time:'20:00', price:120, img:"img/img1.jpg", popular:true},
+        {id:2, city:"Tokyo", venue:"Tokyo Dome", date:"2025-10-12T18:30:00", price:135,time:'19:00', img:"img/img2.jpg", popular:true},
+        {id:3, city:"Los Angeles", venue:"SoFi Stadium", date:"2025-11-02T19:30:00",time:'13:00', price:149, img:"img/img3.jpg", popular:true},
+        {id:4, city:"Bangkok", venue:"Rajamangala Stadium", date:"2025-11-15T19:00:00",time:'10:00', price:99, img:"img/img4.jpg", popular:true},
+        {id:5, city:"London", venue:"Wembley Stadium", date:"2025-12-05T19:30:00",time:'18:00', price:140, img:"img/img5.jpg"},
+        {id:6, city:"New York", venue:"MetLife Stadium", date:"2025-12-12T19:30:00",time:'15:00', price:142, img:"img/img6.webp"},
+        {id:7, city:"Singapore", venue:"National Stadium", date:"2026-01-10T19:00:00",time:'00:00', price:110, img:"img/img7.jpg"},
+        {id:8, city:"Sydney", venue:"Accor Stadium", date:"2026-01-25T19:00:00", time:'11:00', price:115, img:"img/img8.jpg"}
+];
+
+function renderList(list) {
+  const container = document.getElementById('concertList'); 
+  container.innerHTML = ''; // clear previous items
+
+  list.forEach(c => { 
+    const div = document.createElement('div'); 
+    div.className = 'col-md-4 mb-4';
+    div.innerHTML = `
+      <div class="card card-ticket glass h-100"> 
+        <img src="${c.img}" class="card-img-top" alt="${c.city}"> 
+        <div class="card-body">
+          <h5 class="card-title">${c.city} — ${c.venue}</h5> 
+          <p class="card-text text-white-50">
+            ${new Date(c.date).toLocaleDateString()} • ${c.time}
+          </p> 
+          <a href="concert-details.html?id=${c.id}" class="btn btn-sm accent-btn">Details</a> 
+        </div> 
+      </div>`;
+    container.appendChild(div);
+  });
+
+  // show total count
+  document.getElementById('count').textContent = list.length;
+}
+
+// Filter dropdown
+document.getElementById('filterCity').addEventListener('change', function() {
+  const v = this.value;
+  if (v === 'all') renderList(concerts);
+  else renderList(concerts.filter(c => c.city === v));
+});
+
+// Initial render
+renderList(concerts);
+
+
+</script>
+</body>
+</html>

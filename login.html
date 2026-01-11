@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login / Sign up — Go2Events</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+  
+<nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+      <div class="container">
+        <a class="navbar-brand nav-brand" href="index.html">Go2Events</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ml-auto align-items-center">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="concerts.html">Concerts</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+ </nav>
+
+<div class="container mt-4 mb-4" style="height: 550px;">
+  <div class="row no-gutters">
+  <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center" style="background:url('https://images.unsplash.com/photo-1518972559570-7cc1309f3229?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat">
+    <div class="text-center p-4"><h2>Welcome to BTS Tickets</h2><p class="text-white-50">Secure your spot to the best shows. Sign up in seconds.</p></div>
+  </div>
+  <div class="col-md-6 d-flex align-items-center justify-content-center">
+    <div class="p-4 w-100" style="max-width:520px">
+      <div class="card glass p-3">
+        <div class="card-body">
+          <h4 id="formTitle">Login</h4>
+          <form id="formLogin" novalidate>
+            <div class="form-group"><label>Email</label><input type="email" id="loginEmail" class="form-control" required></div>
+            <div class="form-group"><label>Password</label><input type="password" id="loginPass" class="form-control" minlength="6" required></div>
+            <button class="btn-primary btn-block mb-2" style="border-radius: 5px" type="submit">Login</button>
+            <p class="text-center text-white-80">Don't have an account? <a href="#" id="showSignup">Sign up</a></p>
+          </form>
+          <form id="formSignup" style="display:none" novalidate>
+            <div class="form-group"><label>Full name</label><input type="text" id="signupName" class="form-control" required></div>
+            <div class="form-group"><label>Email</label><input type="email" id="signupEmail" class="form-control" required></div>
+            <div class="form-group"><label>Password</label><input type="password" id="signupPass" class="form-control" minlength="6" required></div>
+            <div class="form-group"><label>Confirm password</label><input type="password" id="signupPass2" class="form-control" minlength="6" required></div>
+            <button class="btn-primary btn-block mb-2" style="border-radius: 5px" type="submit">Create account</button>
+            <p class="text-center text-white-80">Already registered? <a href="#" id="showLogin">Login</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+  <footer class="text-center py-3 text-white-50"> <span id="year6"></span> Go2Events @copyright 2025</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+function getUsers(){return JSON.parse(localStorage.getItem('bts_users')||'[]');}
+function saveUsers(u){localStorage.setItem('bts_users', JSON.stringify(u));}
+function setLogin(email){localStorage.setItem('bts_loggedIn', email);}
+function findUser(email){return getUsers().find(x=>x.email===email);}
+
+document.getElementById('showSignup').addEventListener('click',function(e){e.preventDefault();document.getElementById('formLogin').style.display='none';document.getElementById('formSignup').style.display='block';document.getElementById('formTitle').textContent='Create Account'});
+document.getElementById('showLogin').addEventListener('click',function(e){e.preventDefault();document.getElementById('formLogin').style.display='block';document.getElementById('formSignup').style.display='none';document.getElementById('formTitle').textContent='Login'});
+
+document.getElementById('formSignup').addEventListener('submit',function(e){e.preventDefault();var name=document.getElementById('signupName').value.trim();var email=document.getElementById('signupEmail').value.trim();var p=document.getElementById('signupPass').value;var p2=document.getElementById('signupPass2').value;if(!name||!email||!p){alert('Please fill all fields');return} if(p!==p2){alert('Passwords do not match');return} var users=getUsers(); if(users.find(u=>u.email===email)){alert('Email already registered');return} users.push({username:name,email:email,password:p}); saveUsers(users); alert('Account created — please login'); document.getElementById('showLogin').click();});
+
+document.getElementById('formLogin').addEventListener('submit',function(e){e.preventDefault();var email=document.getElementById('loginEmail').value.trim();var p=document.getElementById('loginPass').value; var u=findUser(email); if(!u||u.password!==p){alert('Invalid credentials');return} setLogin(email); alert('Welcome, '+u.username); window.location.href='index.html';});
+</script>
+</body></html>

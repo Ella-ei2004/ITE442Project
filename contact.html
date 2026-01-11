@@ -1,0 +1,68 @@
+<!doctype html><html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact — Go2Events</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <div class="container">
+            <a class="navbar-brand nav-brand" href="index.html">Go2Events</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="concerts.html">Concerts</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                 <li class="nav-item d-flex align-items-center pl-3">
+                    <span class="text-white-50 welcome" id="welcomeText" style="display:none"></span>
+                    <a href="login.html" class="btn btn-sm btn-outline-light mr-2" id="loginBtn">Login</a>
+                    <button class="btn btn-sm accent-btn" id="logoutBtn" style="display:none">Logout</button>
+                </li>
+            </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container py-5">
+        <div class="text-center mb-4">
+            <h2 style="color: white;">Contact Us</h2><p style="color: white;">Questions? Partnership inquiries? Drop us a message.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card glass p-3">
+                    <h5>Send a message</h5>
+                    <form id="contactForm">
+                        <div class="form-group"><label>Name</label><input class="form-control" id="cname" required></div>
+                        <div class="form-group"><label>Email</label><input class="form-control" id="cemail" type="email" required></div>
+                        <div class="form-group"><label>Message</label><textarea class="form-control" id="cmsg" rows="5" required></textarea></div>
+                        <button class="btn accent-btn" type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card glass p-3"><h5>Contact Info</h5><p class="text-white-50">Email: support@btstickets.demo<br>Phone: +66 2 555 0199<br>Follow us on social: @btstickets</p>
+                <!-- Embedded Google Map (generic location) -->
+                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.450999420166!2d100.55473991521785!3d13.73671709036078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ed6b1f0f0b3%3A0x1234567890abcdef!2sRajamangala%20National%20Stadium!5e0!3m2!1sen!2sth!4v1600000000000!5m2!1sen!2sth" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <footer class="text-center py-3 text-white-50"> <span id="year6"></span> Go2Events @copyright 2025</footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit',function(e){e.preventDefault();const n=document.getElementById('cname').value.trim();const em=document.getElementById('cemail').value.trim();
+        const m=document.getElementById('cmsg').value.trim(); if(!n||!em||!m){alert('Please fill all fields');
+        return}
+        alert('Thanks '+n+' — we received your message.'); 
+        document.getElementById('contactForm').reset();});
+    </script>
+ </body>
+ </html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>About — Go2Events</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        body{background:linear-gradient(180deg,#031e3a,#eca8de);
+        color:#fff}
+        .img-about{width:200px;height:200px;border-radius:50%;object-fit:cover;box-shadow:0 4px 8px rgba(0,0,0,0.2)}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <div class="container">
+            <a class="navbar-brand nav-brand" href="index.html">Go2Events</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="concerts.html">Concerts</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                <li class="nav-item d-flex align-items-center pl-3">
+                <span class="text-white-50 welcome" id="welcomeText" style="display:none"></span>
+                <a href="login.html" class="btn btn-sm btn-outline-light mr-2" id="loginBtn">Login</a>
+                <button class="btn btn-sm accent-btn" id="logoutBtn" style="display:none">Logout</button>
+                </li>
+            </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="py-5">
+            <div class="text-center mb-4">
+                <h2>About Us</h2><p>Why choose us for modern & secure ticketing experience?</p>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="p-4 h-100 text-center">
+                        <div class="mb-3">
+                            <img class="img-about" src="./img/img10.jpg" alt="">
+                        </div>
+                        <span style="color: black;">
+                            <h5>🔒Secure Payments</h5>
+                            <p>In production use PCI-compliant providers (Stripe, PayPal).</p>
+                        </span>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="p-4 h-100 text-center">
+                        <div class="mb-3">
+                            <img class="img-about" src="./img/img9.jpg" alt="">
+                        </div>
+                        <span style="color: black;"><h5>⚡Instant Booking</h5><p>Fast reservations and e-ticket delivery.</p></span>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="p-4 h-100 text-center">
+                        <div class="mb-3">
+                            <img class="img-about" src="./img/img11.png" alt="">
+                        </div>
+                        <span style="color: black;">
+                            <h5>🎫Verified Tickets</h5><p>Each ticket contains a QR code (mocked) and unique ID.</p>
+                        </span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            .
+        </section>
+    </div>
+    
+
+    <footer class="text-center py-3 text-white-50"> <span id="year6"></span> Go2Events @copyright 2025</footer>
+</body>
+</html>

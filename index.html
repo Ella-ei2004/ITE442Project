@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Go2Events — Home</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+
+  </head>
+  <body>
+
+    <!-- Shared Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand nav-brand" href="index.html">Go2Events</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ml-auto align-items-center">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="concerts.html">Concerts</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            <li class="nav-item d-flex align-items-center pl-3">
+              <span class="text-white-50 welcome" id="welcomeText" style="display:none"></span>
+              <a href="login.html" class="btn btn-sm btn-outline-light mr-2" id="loginBtn">Login</a>
+              <button class="btn btn-sm accent-btn" id="logoutBtn" style="display:none">Logout</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container text-center">
+        <h1>Experience Live — Secure, fast ticket booking</h1>
+        <p class="lead">Sign up or log in to reserve seats and get e-tickets.</p>
+        <div class="mt-4">
+          <a href="concerts.html" class="btn btn-lg accent-btn mr-4">View Concerts</a>
+          <a href="login.html" class="btn btn-lg btn-outline-light"><span style="color: rgb(94, 9, 94); border-color: white;">Login / Sign up</span></a>
+        </div>
+      </div>
+
+      <header class="container my-4">
+        <div class="hero rounded-lg p-4 p-lg-5 text-white">
+          <div class="row align-items-center">
+            <div class="col-lg-7">
+              <h1 style="color: purple;" class="display-5 font-weight-bold">BTS <span class="text-warning">2025</span> World Tour</h1>
+              <p style="color: black; font-family: 'Times New Roman', Times, serif;" class="lead mb-4">
+                Find official tickets for all cities. Fast checkout. Purple hearts everywhere 💜
+              </p>
+            </div>
+            <div class="col-lg-5 text-center mt-4 mt-lg-0">
+              <img class="img-fluid rounded shadow hero-img"
+                  src="img/bts-concert-4920-x-2767-picture-6bqtymirr1exnr1n.jpg"
+                  alt="Concert crowd">
+            </div>
+          </div>
+        </div>
+    </header>
+    </section>
+
+
+    <!-- HERO -->
+
+
+    <!-- Preview cards -->
+    <section class="pb-5">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-md-8 mx-auto text-center">
+            <h3 style="color: whitesmoke;" class="mt-3">Upcoming Concerts</h3>
+            <p class="text-white">Hot shows and VIP packages — reserve quickly before they sell out.</p>
+          </div>
+        </div>
+
+        <div class="row" id="featuredConcerts">
+          <!-- JS will render featured concert cards -->
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center mt-auto">
+        <span  class="text-white-50">Go2Events @copyright 2025</span>
+    </footer>
+
+  </body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+   // Shared auth functions
+      function getUsers(){ return JSON.parse(localStorage.getItem('bts_users')||'[]') }
+      function saveUser(u){ const users=getUsers(); users.push(u); localStorage.setItem('bts_users', JSON.stringify(users)) }
+      function findUserByEmail(email){ return getUsers().find(x=>x.email===email) }
+
+      function setLoggedIn(email){ localStorage.setItem('bts_loggedIn', email); updateAuthUI() }
+      function logout(){ localStorage.removeItem('bts_loggedIn'); updateAuthUI() }
+      function updateAuthUI(){ 
+        const email=localStorage.getItem('bts_loggedIn') 
+        const welcome=document.getElementById('welcomeText') 
+        const loginBtn=document.getElementById('loginBtn') 
+        const logoutBtn=document.getElementById('logoutBtn') 
+        if(email){ const u=findUserByEmail(email) 
+          welcome.textContent = 'Welcome, ' + (u?u.username:email) 
+          welcome.style.display='inline-block' 
+          loginBtn.style.display='none' 
+          logoutBtn.style.display='inline-block'
+        } 
+        else { 
+          welcome.style.display='none' 
+          loginBtn.style.display='inline-block' 
+          logoutBtn.style.display='none' 
+        }
+      }
+
+document.getElementById('logoutBtn').addEventListener('click', function () {
+    logout(); alert('Logged out')
+    window.location.href = 'index.html'
+})
+      updateAuthUI()
+
+      // Featured concerts data
+      const featured = [
+        {id:1, city:"Seoul", venue:"Jamsil Olympic Stadium", date:"2025-10-03T19:00:00", price:120, img:"img/img1.jpg", popular:true},
+        {id:2, city:"Tokyo", venue:"Tokyo Dome", date:"2025-10-12T18:30:00", price:135, img:"img/img2.jpg", popular:true},
+        {id:3, city:"Los Angeles", venue:"SoFi Stadium", date:"2025-11-02T19:30:00", price:149, img:"img/img3.jpg", popular:true},
+        {id:4, city:"Bangkok", venue:"Rajamangala Stadium", date:"2025-11-15T19:00:00", price:99, img:"img/img4.jpg", popular:true},
+        {id:5, city:"London", venue:"Wembley Stadium", date:"2025-12-05T19:30:00", price:140, img:"img/img5.jpg"},
+        {id:6, city:"New York", venue:"MetLife Stadium", date:"2025-12-12T19:30:00", price:142, img:"img/img6.webp"},
+        {id:7, city:"Singapore", venue:"National Stadium", date:"2026-01-10T19:00:00", price:110, img:"img/img7.jpg"},
+        {id:8, city:"Sydney", venue:"Accor Stadium", date:"2026-01-25T19:00:00", price:115, img:"img/img8.jpg"}
+      ]
+
+       const container = document.getElementById('featuredConcerts')
+      // Show only the first 3 concerts
+      featured.slice(0, 3).forEach(c => {
+        const div = document.createElement('div')
+        div.className = 'col-md-4 mb-4'
+        div.innerHTML = `
+          <div class="card card-ticket glass h-100">
+            <img src="${c.img}" class="card-img-top" alt="${c.city}">
+            <div class="card-body">
+              <h5 class="card-title">${c.city} — ${c.venue}</h5>
+              <p class="card-text text-white-50">${new Date(c.date).toLocaleDateString()} • ${c.time}</p>
+              <a href="concert-details.html?id=${c.id}" class="btn btn-sm accent-btn">Details</a>
+            </div>
+          </div>`
+        container.appendChild(div)
+      })
+
+      // Create "See More" button
+      const seeMoreDiv = document.createElement('div')
+      seeMoreDiv.className = 'col-12 d-flex justify-content-center mt-3' // center + spacing
+      seeMoreDiv.innerHTML = `
+        <a href="concerts.html" class="btn btn-lg accent-btn">See More &rarr;</a>
+      `
+      container.appendChild(seeMoreDiv)
+
+
+
+</script>

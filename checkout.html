@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Checkout — Go2Events</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="index.js">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+<style>
+  body{
+    background:linear-gradient(180deg,#0b0620,#181026);
+    color:#fff}.seat{width:36px;height:36px;border-radius:6px;margin:6px;
+    display:inline-flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    background:#222;
+    border:1px solid #333}.seat.selected{background:#ff6fb3;color:#111}.seat.occupied{background:#555;cursor:not-allowed}.screen{height:12px;background:#444;border-radius:4px;
+    margin:12px 0;text-align:center;padding-top:6px}.card{background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.04)}
+</style>
+</head>
+
+<body>
+  
+<nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+      <div class="container">
+        <a class="navbar-brand nav-brand" href="index.html">Go2Events</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ml-auto align-items-center">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="concerts.html">Concerts</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+ </nav>
+
+<section class="container py-5">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="card p-3 mb-3"><h4 id="concertTitle">Checkout</h4><p id="concertInfo" class="text-white-50"></p>
+        <div id="seatMap" class="d-flex flex-column align-items-center"></div>
+        <p class="text-white-50">Click seats to select. Occupied seats are disabled.</p>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="card p-3">
+        <h5>Order Summary</h5>
+        <p id="selectedSeats" class="text-white-50">No seats selected</p><p>Total: $<span id="total">0</span></p>
+        <hr>
+        <h6>Payment (mock)</h6>
+        <form id="payForm">
+          <div class="form-group"><label>Name on card</label><input class="form-control" id="cardName" required></div>
+          <div class="form-group"><label>Card number</label><input class="form-control" id="cardNumber" required></div>
+          <div class="form-row"><div class="col"><input class="form-control" id="exp" placeholder="MM/YY" required></div><div class="col"><input class="form-control" id="cvc" placeholder="CVC" required></div></div>
+          <button class="btn btn-block mt-3" style="background:#ff6fb3;border:none;color:#111" type="submit">Pay Now</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- e-ticket modal -->
+ <div class="modal fade" id="ticketModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Your E-Ticket</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" id="ticketBody"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="text-center py-3 text-white-50"> <span id="year6"></span> Go2Events @copyright 2025</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+// Simple concert data copy
+const concerts={1:{id:1,city:'Bangkok',venue:'Rajamangala',date:'2025-12-20',time:'19:00',price:120},2:{id:2,city:'Seoul',venue:'Olympic Stadium',date:'2025-12-15',time:'20:00',price:140},3:{id:3,city:'Tokyo',venue:'Tokyo Dome',date:'2026-01-10',time:'18:30',price:130}};
+function qs(name){return new URLSearchParams(window.location.search).get(name);}const cid=parseInt(qs('concert')||'1',10);
+const concert=concerts[cid]; document.getElementById('concertTitle').textContent=concert.city+' — '+concert.venue; document.getElementById('concertInfo').textContent=new Date(concert.date).toLocaleDateString()+' • '+concert.time;
+// Generate simple seat map (6 rows x 8 cols)
+const seatMap=document.getElementById('seatMap'); const rows=6,cols=8; const occupied=['A3','B5','C2']; // sample occupied
+let selected=[];
+for(let r=0;r<rows;r++){const rowDiv=document.createElement('div');rowDiv.className='d-flex'; for(let c=0;c<cols;c++){const seatId=String.fromCharCode(65+r)+(c+1); const btn=document.createElement('button');btn.className='seat';btn.textContent=(c+1);btn.dataset.seat=seatId; if(occupied.includes(seatId)){btn.classList.add('occupied');btn.disabled=true} btn.addEventListener('click',function(){ if(btn.classList.contains('selected')){btn.classList.remove('selected'); selected=selected.filter(s=>s!==seatId);} else {btn.classList.add('selected'); selected.push(seatId);} updateSummary(); }); rowDiv.appendChild(btn);} seatMap.appendChild(rowDiv);}
+function updateSummary(){ const el=document.getElementById('selectedSeats'); const total=document.getElementById('total'); if(selected.length===0){el.textContent='No seats selected'; total.textContent='0';} else {el.textContent='Seats: '+selected.join(', '); total.textContent=(selected.length*concert.price); }}
+// Payment mock
+document.getElementById('payForm').addEventListener('submit',function(e){e.preventDefault(); if(selected.length===0){alert('Please select at least one seat'); return;} const name=document.getElementById('cardName').value.trim(); if(!name){alert('Enter name on card'); return;} // create ticket object and show modal
+const ticket={id: 'TKT-'+Date.now(),concert:concert,seats:selected,total:selected.length*concert.price,holder:name}; // store in localStorage
+let tickets=JSON.parse(localStorage.getItem('bts_tickets')||'[]'); tickets.push(ticket); localStorage.setItem('bts_tickets', JSON.stringify(tickets)); // show modal
+const body=document.getElementById('ticketBody'); body.innerHTML=`<p>Thank you, <strong>${name}</strong> — your payment was successful.</p><p><strong>Ticket ID:</strong> ${ticket.id}</p><p><strong>Concert:</strong> ${concert.city} — ${concert.venue}</p><p><strong>Seats:</strong> ${selected.join(', ')}</p><p><strong>Total:</strong> $${ticket.total}</p><div style="text-align:center;margin-top:12px"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${ticket.id}" alt="qr"></div>`;
+$('#ticketModal').modal('show');});
+</script></body></html>
